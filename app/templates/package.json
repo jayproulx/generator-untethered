@@ -1,0 +1,15 @@
+{
+  "name": "<%= _.slugify(appName) %>",
+  "version": "<%= appVersion %>",
+  "main": "server.js",
+  "devDependencies": {
+    "express": "3.x",
+    "grunt-express-server": "~0.4.5",
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "browserify": "~2.35.4",
+    "grunt-browserify": "~1.2.11",
+    "uglifyify": "~1.0.1",
+    "grunt-autoprefixer": "~0.4.1"
+  }
+}
