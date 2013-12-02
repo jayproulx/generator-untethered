@@ -1,6 +1,6 @@
 {
   "name": "generator-untethered",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A generator for Yeoman",
   "keywords": [
     "yeoman-generator"
@@ -24,7 +24,11 @@
     "yeoman-generator": "~0.14.0"
   },
   "devDependencies": {
-    "mocha": "~1.14.0"
+    "mocha": "~1.14.0",
+    "grunt-cli": "~0.1.11",
+    "bower": "~1.2.8",
+    "yo": "~1.0.4",
+    "generator-untethered": "git://github.com/pollensoft/untethered"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
