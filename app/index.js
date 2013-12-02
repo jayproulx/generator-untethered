@@ -83,7 +83,7 @@ UntetheredGenerator.prototype.askFor = function askFor() {
 
 UntetheredGenerator.prototype.app = function app() {
 	this.copy('.bowerrc', '.bowerrc');
-	this.copy('.gitignore', '.gitignore');
+	this.copy('_gitignore', '.gitignore');
 	this.template('bower.json', 'bower.json');
 	this.template('Gruntfile.js', 'Gruntfile.js');
 	this.copy('installhooks.sh', 'installhooks.sh');
