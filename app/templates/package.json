@@ -1,7 +1,7 @@
 {
-  "name": "<%= _.slugify(appName) %>",
-  "version": "<%= appVersion %>",
-  "main": "server.js",
+  "name": "dev-portal",
+  "version": "0.0.1",
+  "main": "src/main/node/server.js",
   "devDependencies": {
     "express": "3.x",
     "grunt-express-server": "~0.4.5",
@@ -10,6 +10,16 @@
     "browserify": "~2.35.4",
     "grunt-browserify": "~1.2.11",
     "uglifyify": "~1.0.1",
-    "grunt-autoprefixer": "~0.4.1"
+    "grunt-autoprefixer": "~0.4.1",
+    "grunt-modules": "~0.1.0",
+    "grunt-karma": "~0.6.2",
+    "karma-chrome-launcher": "~0.1.1",
+    "karma-script-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-firefox-launcher": "~0.1.2",
+    "karma-jasmine": "~0.1.4",
+    "karma-phantomjs-launcher": "~0.1.1",
+    "karma": "~0.10.8",
+    "grunt-contrib-jshint": "~0.7.2"
   }
 }

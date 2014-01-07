@@ -35,8 +35,6 @@ function exists(path) {
 	} catch (e) {
 		return false;
 	}
-
-	return false;
 }
 
 
@@ -86,6 +84,8 @@ UntetheredGenerator.prototype.app = function app() {
 	this.copy('_gitignore', '.gitignore');
 	this.template('bower.json', 'bower.json');
 	this.template('Gruntfile.js', 'Gruntfile.js');
+	this.copy('grunt.vendor.js', 'grunt.vendor.js');
+	this.copy('grunt.index.js', 'grunt.index.js');
 	this.copy('installhooks.sh', 'installhooks.sh');
 	this.template('package.json', 'package.json');
 	this.directory('.githooks', '.githooks');
@@ -93,8 +93,7 @@ UntetheredGenerator.prototype.app = function app() {
 };
 
 UntetheredGenerator.prototype.projectfiles = function () {
-	var self = this,
-		async = this.async(),
+	var async = this.async(),
 		prompts = [{
 			type: 'confirm',
 			name: 'gitInit',

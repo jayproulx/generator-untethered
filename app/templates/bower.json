@@ -1,18 +1,23 @@
 {
-  "name": "<%= _.slugify(appName) %>",
-  "version": "<%= appVersion %>",
+  "name": "dev-portal",
+  "version": "0.0.1",
   "main": "src/main/www/index.html",
-  "directory": "src/main/www/components",
+  "directory": "src/main/www/libs",
   "dependencies": {
-    "angular": "~1.2.0-rc.3",
-    "angular-resource": "~1.2.0-rc.3",
     "jquery": "~2.0.3",
-    "angular-ui-router": "~0.2.0",
-    "bootstrap": "~3.0.2"
+    "bootstrap": "~3.0.2",
+    "angular": "~1.2.3",
+    "angular-bootstrap": "~0.7.0"
   },
   "ignore": [
     "**/.*",
     "node_modules",
     "components"
-  ]
+  ],
+  "devDependencies": {
+    "angular-mocks": "~1.2.4"
+  },
+  "resolutions": {
+    "angular": "1.2.3"
+  }
 }
