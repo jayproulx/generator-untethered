@@ -1,7 +1,7 @@
 Untethered
 ==========
 
-[![Build Status](https://secure.travis-ci.org/jayproulx/generator-untethered.png?branch=master)](https://travis-ci.org/pollensoft/generator-untethered)
+[![Build Status](https://secure.travis-ci.org/jayproulx/generator-untethered.png?branch=master)](https://travis-ci.org/jayproulx/generator-untethered)
 
 A generator for [Yeoman](http://yeoman.io).
 
