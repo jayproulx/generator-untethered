@@ -17,46 +17,46 @@
 
 'use strict';
 
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var cp = require('child_process');
-var fs = require('fs');
+var util = require( 'util' );
+var path = require( 'path' );
+var yeoman = require( 'yeoman-generator' );
+var cp = require( 'child_process' );
+var fs = require( 'fs' );
 
-function exists(path) {
+function exists( path ) {
 	var stats;
 
 	try {
 		// Query the entry
-		stats = fs.lstatSync(path);
+		stats = fs.lstatSync( path );
 
 		// Is it a directory?
 		return stats.isDirectory() || stats.isFile();
-	} catch (e) {
+	} catch ( e ) {
 		return false;
 	}
 }
 
 
-var UntetheredGenerator = module.exports = function UntetheredGenerator(args, options, config) {
-	yeoman.generators.Base.apply(this, arguments);
+var UntetheredGenerator = module.exports = function UntetheredGenerator( args, options, config ) {
+	yeoman.generators.Base.apply( this, arguments );
 
-	this.on('end', function () {
-		this.installDependencies({
+	this.on( 'end', function () {
+		this.installDependencies( {
 			skipInstall: options['skip-install']
-		});
-	});
+		} );
+	} );
 
-	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+	this.pkg = JSON.parse( this.readFileAsString( path.join( __dirname, '../package.json' ) ) );
 };
 
-util.inherits(UntetheredGenerator, yeoman.generators.Base);
+util.inherits( UntetheredGenerator, yeoman.generators.Base );
 
 UntetheredGenerator.prototype.askFor = function askFor() {
 	var async = this.async(),
 		prompts;
 
-	this.gitExists = exists(process.cwd() + "/.git");
+	this.gitExists = exists( process.cwd() + "/.git" );
 
 	prompts = [
 		{
@@ -71,95 +71,97 @@ UntetheredGenerator.prototype.askFor = function askFor() {
 		}
 	];
 
-	this.prompt(prompts, function (props) {
+	this.prompt( prompts, function ( props ) {
 		this.appName = props.appName;
 		this.appVersion = props.appVersion;
 
 		async();
-	}.bind(this));
+	}.bind( this ) );
 };
 
 UntetheredGenerator.prototype.app = function app() {
-	this.copy('.bowerrc', '.bowerrc');
-	this.copy('_gitignore', '.gitignore');
-	this.template('bower.json', 'bower.json');
-	this.template('Gruntfile.js', 'Gruntfile.js');
-	this.copy('grunt.vendor.js', 'grunt.vendor.js');
-	this.copy('grunt.index.js', 'grunt.index.js');
-	this.copy('installhooks.sh', 'installhooks.sh');
-	this.template('package.json', 'package.json');
-	this.directory('.githooks', '.githooks');
-	this.directory('src', 'src');
+	this.copy( '.bowerrc', '.bowerrc' );
+	this.copy( '_gitignore', '.gitignore' );
+	this.template( 'bower.json', 'bower.json' );
+	this.template( 'Gruntfile.js', 'Gruntfile.js' );
+	this.copy( 'grunt.vendor.js', 'grunt.vendor.js' );
+	this.copy( 'grunt.index.js', 'grunt.index.js' );
+	this.copy( 'installhooks.sh', 'installhooks.sh' );
+	this.template( 'package.json', 'package.json' );
+	this.directory( '.githooks', '.githooks' );
+	this.directory( 'src', 'src' );
 };
 
 UntetheredGenerator.prototype.projectfiles = function () {
 	var async = this.async(),
-		prompts = [{
-			type: 'confirm',
-			name: 'gitInit',
-			message: 'Should I initialize a git repository for you?',
-			'default': true
-		}, {
-			type: 'confirm',
-			name: 'installGitHooks',
-			message: 'Do you want me to install the Git hooks?',
-			'default': true,
-			when: function (props) {
-				console.log("Prompt: installGitHooks when", props.gitInit, this.gitExists, arguments);
+		prompts = [
+			{
+				type: 'confirm',
+				name: 'gitInit',
+				message: 'Should I initialize a git repository for you?',
+				'default': true
+			},
+			{
+				type: 'confirm',
+				name: 'installGitHooks',
+				message: 'Do you want me to install the Git hooks?',
+				'default': true,
+				when: function ( props ) {
+					console.log( "Prompt: installGitHooks when", props.gitInit, this.gitExists, arguments );
 
-				return props.gitInit || this.gitExists;
-			}.bind(this)
-		}];
+					return props.gitInit || this.gitExists;
+				}.bind( this )
+			}
+		];
 
-	this.prompt(prompts, function (props) {
-		console.log(props);
+	this.prompt( prompts, function ( props ) {
+		console.log( props );
 		this.gitInit = props.gitInit;
 		this.installGitHooks = props.installGitHooks;
 
-		if (props.gitInit) {
-			initGit.call(this, function () {
-				if (props.installGitHooks) {
-					installGitHooks.call(this);
+		if ( props.gitInit ) {
+			initGit.call( this, function () {
+				if ( props.installGitHooks ) {
+					installGitHooks.call( this );
 				}
-			}.bind(this));
+			}.bind( this ) );
 		}
 
+		this.emit( 'gitSetupComplete' );
 		async();
-	}.bind(this));
+	}.bind( this ) );
 };
 
 /*
------ Private Functions -----
-*/
+ ----- Private Functions -----
+ */
 
-var initGit = function (cb) {
-	console.log("UntetheredGenerator: initGit");
-	
-	if(this.gitExists) 
-	{
-		console.log(".git already exists for this project, no need to initialize.");
+var initGit = function ( cb ) {
+	if ( this.gitExists ) {
+		console.log( ".git already exists for this project, no need to initialize." );
 	}
 
-	if (this.gitInit && !this.gitExists) {
+	if ( this.gitInit && !this.gitExists ) {
 		var async = this.async();
 
-		cp.exec('git init', function (error, stdout, stderr) {
-			if (error) {
-				console.log(error, stderr);
+		cp.exec( 'set -x && cd `pwd` && git init', {cwd: process.cwd()}, function ( error, stdout, stderr ) {
+			if ( error ) {
+				console.error( "ERROR trying to `init git`", error, stderr );
 			}
 
-			console.log("git init async");
-			async(error);
-		});
+			this.emit( 'initGitComplete' );
+
+			async( error );
+		}.bind( this ) );
 	}
-	
-	if(cb)
-	{
+
+	if ( cb ) {
 		cb();
 	}
 };
 
 var installGitHooks = function () {
-	console.log("UntetheredGenerator: installGitHooks");
-	this.copy('.githooks/pre-commit', '.git/hooks/pre-commit');
+	console.log( "UntetheredGenerator: installGitHooks" );
+	this.copy( '.githooks/pre-commit', '.git/hooks/pre-commit' );
+	this.emit( 'installGitHooksComplete' );
 };

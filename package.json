@@ -28,7 +28,8 @@
     "grunt-cli": "~0.1.11",
     "bower": "~1.2.8",
     "yo": "~1.0.4",
-    "generator-untethered": "git://github.com/pollensoft/untethered"
+    "generator-untethered": "git://github.com/pollensoft/untethered",
+    "fs.extra": "~1.2.1"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
