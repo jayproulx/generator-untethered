@@ -82,8 +82,8 @@ describe( 'untethered generator', function () {
 			this.app.run( {}, function () {
 				setTimeout( function () {
 					helpers.assertFiles( expected );
+					done();
 				}, 1000 );
-				done();
 			} );
 		} );
 
