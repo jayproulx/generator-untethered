@@ -3,28 +3,40 @@
 
 var path = require( 'path' ),
 	helpers = require( 'yeoman-generator' ).test,
-	fs = require( 'fs.extra' ),
+	fs = require( 'fs-extra' ),
+	cp = require( 'child_process' ),
 	tempDir = function () {
 		return path.join( __dirname, 'temp' + new Date().getTime() );
 	};
 
+function rmrf( dir, cb ) {
+	cp.exec( 'set -x && rm -rf ' + dir, cb || function() {});
+}
+
 describe( 'untethered generator', function () {
-	beforeEach( function ( done ) {
-		var td = tempDir();
+	var td = tempDir();
 
+	before( function ( done ) {
 		console.log( "Using temp dir: " + td );
-		fs.rmrfSync( td );
+		// make sure that this temp folder is removed before executing the tests.
+		// fs.removeSync( td );
+		rmrf( td, function () {
+			helpers.testDirectory( td, function ( err ) {
+				if ( err ) {
+					return done( err );
+				}
 
-		helpers.testDirectory( td, function ( err ) {
-			if ( err ) {
-				return done( err );
-			}
+				this.app = helpers.createGenerator( 'untethered:app', ['../../app'] );
 
-			this.app = helpers.createGenerator( 'untethered:app', ['../../app'] );
+				done();
 
-			done();
-
+			}.bind( this ) );
 		}.bind( this ) );
+
+	} );
+
+	after( function () {
+		rmrf( td );
 	} );
 
 	describe( 'basic configuration', function () {
@@ -46,6 +58,7 @@ describe( 'untethered generator', function () {
 				'src/test/www/js/karma.conf.js',
 				'src/main/www/js/index.js',
 				'src/main/www/partials/nav.html',
+				'src/main/www/partials/user-tile.html',
 				'src/main/www/partials/welcome.html'
 			];
 
@@ -66,9 +79,9 @@ describe( 'untethered generator', function () {
 
 	describe( 'git features', function () {
 
-		it( 'creates initializes git', function ( done ) {
+		it.skip( 'initializes git', function ( done ) {
 			var expected = [
-				'.git'
+				'.git/HEAD'
 			];
 
 			helpers.mockPrompt( this.app, {
@@ -80,14 +93,12 @@ describe( 'untethered generator', function () {
 
 			this.app.options['skip-install'] = true;
 			this.app.run( {}, function () {
-				setTimeout( function () {
-					helpers.assertFiles( expected );
-					done();
-				}, 1000 );
+				helpers.assertFiles( expected );
+				done();
 			} );
 		} );
 
-		it( 'creates installs git hooks', function ( done ) {
+		it( 'installs git hooks', function ( done ) {
 			var expected = [
 				'.git',
 				'.git/hooks/pre-commit'
