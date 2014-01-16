@@ -29,7 +29,8 @@
     "bower": "~1.2.8",
     "yo": "~1.0.4",
     "generator-untethered": "git://github.com/pollensoft/untethered",
-    "fs-extra": "~0.8.1"
+    "fs-extra": "~0.8.1",
+    "grunt": "~0.4.2"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
