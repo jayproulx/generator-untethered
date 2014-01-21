@@ -30,5 +30,5 @@ angular.module( "index", ["ui.bootstrap"] )
 			}
 
 			return words.join(' ');
-		}
+		};
 	});
