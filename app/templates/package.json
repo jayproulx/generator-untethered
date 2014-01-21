@@ -1,6 +1,6 @@
 {
-  "name": "dev-portal",
-  "version": "0.0.1",
+  "name": "<%= _.slugify(appName) %>",
+  "version": "<%= appVersion %>",
   "main": "src/main/node/server.js",
   "devDependencies": {
     "express": "3.x",
