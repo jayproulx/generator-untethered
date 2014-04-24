@@ -3,6 +3,8 @@ Untethered
 
 [![Build Status](https://secure.travis-ci.org/jayproulx/generator-untethered.png?branch=master)](https://travis-ci.org/jayproulx/generator-untethered)
 
+Ahem.  The build is only failing because I haven't quite figured how to run the tests to run the generator and test the output.  It's fully functional though :)
+
 A generator for [Yeoman](http://yeoman.io).
 
 ## Getting Started
